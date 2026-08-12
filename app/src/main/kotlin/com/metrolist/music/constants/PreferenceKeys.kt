@@ -13,11 +13,11 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-val EnableDynamicIconKey = booleanPreferencesKey("enableDynamicIcon")
-val DynamicThemeKey = booleanPreferencesKey("dynamicTheme")
-val DarkModeKey = stringPreferencesKey("darkMode")
-val PureBlackKey = booleanPreferencesKey("pureBlack")
-val PureBlackMiniPlayerKey = booleanPreferencesKey("pureBlackMiniPlayer")
+val booleanPreferencesKey("enableDynamicIcon")
+val booleanPreferencesKey("dynamicTheme")
+val stringPreferencesKey("darkMode")
+val booleanPreferencesKey("pureBlack")
+val booleanPreferencesKey("pureBlackMiniPlayer")
 val MiniPlayerOutlineKey = booleanPreferencesKey("miniPlayerOutline")
 val DefaultOpenTabKey = stringPreferencesKey("defaultOpenTab")
 val SlimNavBarKey = booleanPreferencesKey("slimNavBar")
@@ -39,11 +39,11 @@ enum class SliderStyle {
 
 const val SYSTEM_DEFAULT = "SYSTEM_DEFAULT"
 val AppLanguageKey = stringPreferencesKey("appLanguage")
-val ContentLanguageKey = stringPreferencesKey("contentLanguage")
-val ContentCountryKey = stringPreferencesKey("contentCountry")
-val EnableKugouKey = booleanPreferencesKey("enableKugou")
-val HideExplicitKey = booleanPreferencesKey("hideExplicit")
-val HideVideoSongsKey = booleanPreferencesKey("hideVideoSongs")
+val stringPreferencesKey("contentLanguage")
+val stringPreferencesKey("contentCountry")
+val booleanPreferencesKey("enableKugou")
+val booleanPreferencesKey("hideExplicit")
+val booleanPreferencesKey("hideVideoSongs")
 val YtmSyncKey = booleanPreferencesKey("ytmSync")
 val CheckForUpdatesKey = booleanPreferencesKey("checkForUpdates")
 val UpdateNotificationsEnabledKey = booleanPreferencesKey("updateNotifications")
@@ -129,7 +129,7 @@ val AlbumViewTypeKey = stringPreferencesKey("albumViewType")
 val PlaylistViewTypeKey = stringPreferencesKey("playlistViewType")
 
 val PlaylistEditLockKey = booleanPreferencesKey("playlistEditLock")
-val QuickPicksKey = stringPreferencesKey("discover")
+val stringPreferencesKey("discover")
 val QueueEditLockKey = booleanPreferencesKey("queueEditLock")
 
 val ShowLikedPlaylistKey = booleanPreferencesKey("show_liked_playlist")
@@ -295,7 +295,7 @@ enum class PlayerBackgroundStyle {
     BLUR,
 }
 
-val TopSize = stringPreferencesKey("topSize")
+val stringPreferencesKey("topSize")
 val HistoryDuration = floatPreferencesKey("historyDuration")
 
 val PlayerButtonsStyleKey = stringPreferencesKey("player_buttons_style")
