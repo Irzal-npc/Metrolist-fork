@@ -29,14 +29,12 @@ import com.metrolist.music.constants.SongSortType
 import com.metrolist.music.db.entities.Album
 import com.metrolist.music.db.entities.AlbumArtistMap
 import com.metrolist.music.db.entities.AlbumEntity
-import com.metrolist.music.db.entities.PlayCountEntity
 import com.metrolist.music.db.entities.AlbumWithSongs
 import com.metrolist.music.db.entities.Artist
 import com.metrolist.music.db.entities.ArtistEntity
 import com.metrolist.music.db.entities.Event
 import com.metrolist.music.db.entities.EventWithSong
 import com.metrolist.music.db.entities.FormatEntity
-import com.metrolist.music.db.entities.LyricsEntity
 import com.metrolist.music.db.entities.Playlist
 import com.metrolist.music.db.entities.PlaylistEntity
 import com.metrolist.music.db.entities.PlaylistSong
@@ -48,7 +46,6 @@ import com.metrolist.music.db.entities.Song
 import com.metrolist.music.db.entities.SongAlbumMap
 import com.metrolist.music.db.entities.SongArtistMap
 import com.metrolist.music.db.entities.SongEntity
-import com.metrolist.music.db.entities.SongWithStats
 import com.metrolist.music.extensions.reversed
 import com.metrolist.music.extensions.toSQLiteQuery
 import com.metrolist.music.models.MediaMetadata
@@ -344,39 +341,6 @@ interface DatabaseDao {
         LIMIT :limit OFFSET :offset
         """,
     )
-    fun mostPlayedSongsStats(
-        fromTimeStamp: Long,
-        limit: Int = 6,
-        offset: Int = 0,
-        toTimeStamp: Long? = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli(),
-    ): Flow<List<SongWithStats>>
-
-    @Transaction
-    @RewriteQueriesToDropUnusedColumns
-    @Query(
-        """
-        SELECT song.*,
-               (SELECT COUNT(1)
-                FROM event
-                WHERE songId = song.id
-                  AND timestamp > :fromTimeStamp AND timestamp <= :toTimeStamp) AS songCountListened,
-               (SELECT SUM(event.playTime)
-                FROM event
-                WHERE songId = song.id
-                  AND timestamp > :fromTimeStamp AND timestamp <= :toTimeStamp) AS timeListened
-        FROM song
-        JOIN (SELECT songId
-                     FROM event
-                     WHERE timestamp > :fromTimeStamp
-                     AND timestamp <= :toTimeStamp
-                     GROUP BY songId
-                     ORDER BY SUM(playTime) DESC
-                     LIMIT :limit)
-        ON song.id = songId
-        LIMIT :limit
-        OFFSET :offset
-    """,
-    )
     fun mostPlayedSongs(
         fromTimeStamp: Long,
         limit: Int = 6,
@@ -499,35 +463,6 @@ interface DatabaseDao {
     fun artistAlbumsPreview(artistId: String, previewSize: Int = 6): Flow<List<Album>>
 
     @Query("SELECT sum(count) from playCount WHERE song = :songId")
-    fun getLifetimePlayCount(songId: String?): Flow<Int>
-    @Query("SELECT sum(count) from playCount WHERE song = :songId AND year = :year")
-    fun getPlayCountByYear(songId: String?, year: Int): Flow<Int>
-    @Query("SELECT count from playCount WHERE song = :songId AND year = :year AND month = :month")
-    fun getPlayCountByMonth(songId: String?, year: Int, month: Int): Flow<Int>
-
-    @Transaction
-    @Query(
-        """
-        SELECT song.*
-        FROM (SELECT n.songId      AS eid,
-                     SUM(playTime) AS oldPlayTime,
-                     newPlayTime
-              FROM event
-                       JOIN
-                   (SELECT songId, SUM(playTime) AS newPlayTime
-                    FROM event
-                    WHERE timestamp > (:now - 86400000 * 30 * 1)
-                    GROUP BY songId
-                    ORDER BY newPlayTime) as n
-                   ON event.songId = n.songId
-              WHERE timestamp < (:now - 86400000 * 30 * 1)
-              GROUP BY n.songId
-              ORDER BY oldPlayTime) AS t
-                 JOIN song on song.id = t.eid
-        WHERE 0.2 * t.oldPlayTime > t.newPlayTime
-        LIMIT 100
-    """
-    )
     fun forgottenFavorites(now: Long = System.currentTimeMillis()): Flow<List<Song>>
 
     @Transaction
@@ -615,7 +550,6 @@ interface DatabaseDao {
 
     @Transaction
     @Query("SELECT * FROM lyrics WHERE id = :id")
-    fun lyrics(id: String?): Flow<LyricsEntity?>
 
     @Transaction
     @SuppressWarnings(RoomWarnings.QUERY_MISMATCH)
@@ -1147,27 +1081,6 @@ interface DatabaseDao {
     fun incrementTotalPlayTime(songId: String, playTime: Long)
 
     @Query("UPDATE playCount SET count = count + 1 WHERE song = :songId AND year = :year AND month = :month")
-    fun incrementPlayCount(songId: String, year: Int, month: Int)
-
-    /**
-     * Increment by one the play count with today's year and month.
-     */
-    fun incrementPlayCount(songId: String) {
-        val time = LocalDateTime.now().atOffset(ZoneOffset.UTC)
-        var oldCount: Int
-        runBlocking {
-            oldCount = getPlayCountByMonth(songId, time.year, time.monthValue).first()
-        }
-
-        // add new
-        if (oldCount <= 0) {
-            insert(PlayCountEntity(songId, time.year, time.monthValue, 0))
-        }
-        incrementPlayCount(songId, time.year, time.monthValue)
-    }
-
-    @Transaction
-    @Query("UPDATE song SET inLibrary = :inLibrary WHERE id = :songId")
     fun inLibrary(
         songId: String,
         inLibrary: LocalDateTime?,
@@ -1269,7 +1182,6 @@ interface DatabaseDao {
     fun insert(map: RelatedSongMap)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(playCountEntity: PlayCountEntity): Long
 
     @Transaction
     fun insert(
@@ -1492,7 +1404,6 @@ interface DatabaseDao {
     fun upsert(map: SongAlbumMap)
 
     @Upsert
-    fun upsert(lyrics: LyricsEntity)
 
     @Upsert
     fun upsert(format: FormatEntity)
@@ -1525,7 +1436,6 @@ interface DatabaseDao {
     fun deletePlaylistById(browseId: String)
 
     @Delete
-    fun delete(lyrics: LyricsEntity)
 
     @Delete
     fun delete(searchHistory: SearchHistory)
