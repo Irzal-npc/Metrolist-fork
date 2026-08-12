@@ -9,7 +9,6 @@
         <item quantity="other">%d dipilih</item>
     </plurals>
     <string name="history">Riwayat</string>
-    <string name="stats">Statistik</string>
     <string name="mood_and_genres">Suasana Hati dan Genre</string>
     <string name="account">Akun</string>
     <string name="quick_picks">Pilihan cepat</string>
@@ -86,8 +85,6 @@
     <string name="file_size">Ukuran berkas</string>
     <string name="unknown">Tidak diketahui</string>
     <string name="copied">Disalin ke papan klip</string>
-    <string name="edit_lyrics">Ubah lirik</string>
-    <string name="search_lyrics">Cari lirik</string>
     <string name="edit_song">Ubah lagu</string>
     <string name="song_title">Judul lagu</string>
     <string name="song_artists">Artis lagu</string>
@@ -127,7 +124,6 @@
     <string name="removed_song_from_playlist">Menghapus \"%s\" dari daftar putar</string>
     <string name="playlist_synced">Daftar putar disinkronkan</string>
     <string name="undo">Batalkan</string>
-    <string name="lyrics_not_found">Lirik tidak ditemukan</string>
     <string name="sleep_timer">Pengatur waktu tidur</string>
     <string name="end_of_song">Akhir lagu</string>
     <plurals name="minute">
@@ -148,16 +144,8 @@
     <string name="queue_searched_songs">Lagu yang dicari</string>
     <string name="music_player">Pemutar Musik</string>
     <string name="settings">Pengaturan</string>
-    <string name="appearance">Tampilan</string>
-    <string name="enable_dynamic_theme">Aktifkan tema dinamis</string>
-    <string name="dark_theme">Tema gelap</string>
-    <string name="dark_theme_on">Aktif</string>
-    <string name="dark_theme_off">Nonaktif</string>
-    <string name="dark_theme_follow_system">Ikuti sistem</string>
-    <string name="pure_black">Hitam murni</string>
     <string name="default_open_tab">Tab terbuka bawaan</string>
     <string name="customize_navigation_tabs">Sesuaikan tab navigasi</string>
-    <string name="lyrics_text_position">Posisi teks lirik</string>
     <string name="left">Kiri</string>
     <string name="center">Tengah</string>
     <string name="right">Kanan</string>
@@ -166,9 +154,6 @@
     <string name="content_language">Bahasa konten bawaan</string>
     <string name="content_country">Negara konten bawaan</string>
     <string name="system_default">Bawaan sistem</string>
-    <string name="enable_proxy">Aktifkan proksi</string>
-    <string name="proxy_type">Jenis proksi</string>
-    <string name="proxy_url">URL proksi</string>
     <string name="restart_to_take_effect">Mulai ulang untuk menerapkan perubahan</string>
     <string name="player_and_audio">Pemutar dan audio</string>
     <string name="audio_quality">Kualitas audio</string>
@@ -191,7 +176,6 @@
     <string name="max_song_cache_size">Batas maksimum ukuran tembolok lagu</string>
     <string name="clear_song_cache">Bersihkan tembolok lagu</string>
     <string name="size_used">%s digunakan</string>
-    <string name="privacy">Privasi</string>
     <string name="pause_listen_history">Jeda riwayat mendengarkan</string>
     <string name="clear_listen_history">Bersihkan riwayat mendengarkan</string>
     <string name="clear_listen_history_confirm">Apakah Anda yakin ingin menghapus semua riwayat mendengarkan?</string>
@@ -206,7 +190,6 @@
     <string name="backup_create_success">Cadangan berhasil dibuat</string>
     <string name="backup_create_failed">Tidak dapat membuat cadangan</string>
     <string name="restore_failed">Gagal memulihkan cadangan</string>
-    <string name="about">Tentang</string>
     <string name="app_version">Versi aplikasi</string>
     <string name="new_version_available">Versi baru tersedia</string>
     <string name="translation_models">Model Penerjemahan</string>
@@ -241,7 +224,6 @@
     <string name="skip_duplicates">Lewati duplikat</string>
     <string name="duplicates_description_single">Lagu tersebut sudah ada di dalam daftar putar Anda</string>
     <string name="duplicates_description_multiple">%d lagu sudah ada di dalam daftar putar Anda</string>
-    <string name="theme">Tema</string>
     <string name="action_like_all">Sukai semua</string>
     <string name="action_remove_like_all">Hapus semua yang disukai</string>
     <string name="player_text_alignment">Perataan teks pemutar</string>

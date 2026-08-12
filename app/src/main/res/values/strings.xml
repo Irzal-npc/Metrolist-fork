@@ -21,7 +21,6 @@
 
     <!-- Home -->
     <string name="history">History</string>
-    <string name="stats">Stats</string>
     <string name="mood_and_genres">Mood and Genres</string>
     <string name="account">Account</string>
     <string name="quick_picks">Quick picks</string>
@@ -38,7 +37,6 @@
     <string name="this_week">This week</string>
     <string name="last_week">Last week</string>
 
-    <!-- Stats -->
     <string name="most_played_songs">Most played songs</string>
     <string name="most_played_artists">Most played artists</string>
     <string name="most_played_albums">Most played albums</string>
@@ -137,8 +135,6 @@
     <string name="unknown">Unknown</string>
     <string name="copied">Copied to clipboard</string>
 
-    <string name="edit_lyrics">Edit lyrics</string>
-    <string name="search_lyrics">Search lyrics</string>
 
     <string name="edit_song">Edit song</string>
     <string name="song_title">Song title</string>
@@ -200,7 +196,6 @@
     <string name="undo">Undo</string>
 
     <!-- Player -->
-    <string name="lyrics_not_found">Lyrics not found</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="end_of_song">End of song</string>
     <plurals name="minute">
@@ -232,18 +227,9 @@
 
     <!-- Settings -->
     <string name="settings">Settings</string>
-    <string name="appearance">Appearance</string>
-    <string name="theme">Theme</string>
-    <string name="enable_dynamic_theme">Enable dynamic theme</string>
-    <string name="dark_theme">Dark theme</string>
-    <string name="dark_theme_on">On</string>
-    <string name="dark_theme_off">Off</string>
-    <string name="dark_theme_follow_system">Follow system</string>
-    <string name="pure_black">Pure black</string>
     <string name="customize_navigation_tabs">Customize navigation tabs</string>
     <string name="player">Player</string>
     <string name="player_text_alignment">Player text alignment</string>
-    <string name="lyrics_text_position">Lyrics text position</string>
     <string name="sided">Sided</string>
     <string name="left">Left</string>
     <string name="center">Center</string>
@@ -267,9 +253,6 @@
     <string name="content_language">Default content language</string>
     <string name="content_country">Default content country</string>
     <string name="system_default">System default</string>
-    <string name="enable_proxy">Enable proxy</string>
-    <string name="proxy_type">Proxy type</string>
-    <string name="proxy_url">Proxy URL</string>
     <string name="restart_to_take_effect">Restart to take effect</string>
 
     <string name="player_and_audio">Player and audio</string>
@@ -302,7 +285,6 @@
     <string name="clear_song_cache">Clear song cache</string>
     <string name="size_used">%s used</string>
 
-    <string name="privacy">Privacy</string>
     <string name="listen_history">Listen history</string>
     <string name="pause_listen_history">Pause listen history</string>
     <string name="clear_listen_history">Clear listen history</string>
@@ -315,8 +297,6 @@
     <string name="use_login_for_browse_desc">This can influence what content you see and for example shows premium-only albums if you are logged in with a Premium account</string>
     <string name="disable_screenshot">Disable screenshot</string>
     <string name="disable_screenshot_desc">When this option is on, screenshots and the app\'s view in Recents are disabled.</string>
-    <string name="enable_lrclib">Enable LrcLib lyrics provider</string>
-    <string name="enable_kugou">Enable KuGou lyrics provider</string>
     <string name="hide_explicit">Hide explicit content</string>
 
 
@@ -335,7 +315,6 @@
     <string name="preview">Preview</string>
     <string name="enable_discord_rpc">Enable Rich Presence</string>
 
-    <string name="about">About</string>
     <string name="app_version">App version</string>
 
     <string name="new_version_available">New version available</string>
