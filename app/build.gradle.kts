@@ -42,7 +42,6 @@ android {
         create("foss") {
             dimension = "variant"
             isDefault = true
-            buildConfigField("Boolean", "CAST_AVAILABLE", "false")
         }
         
         // GMS variant - REMOVED (only keeping foss + arm64)

@@ -198,9 +198,6 @@
             </intent-filter>
         </receiver>        
 
-        <meta-data
-            android:name="com.google.android.gms.car.application"
-            android:resource="@xml/automotive_app_desc" />
         <receiver
             android:name=".widget.HelloWidget"
             android:exported="true">
@@ -213,10 +210,6 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <!-- Google Cast Options Provider -->
-        <meta-data
-            android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
-            android:value="com.metrolist.music.cast.CastOptionsProvider" />
     </application>
 
 </manifest>
