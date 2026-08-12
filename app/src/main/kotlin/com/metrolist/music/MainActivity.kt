@@ -789,9 +789,9 @@ class MainActivity : ComponentActivity() {
                             },
                             bottomBar = {
                                 val currentRoute = navBackStackEntry?.destination?.route
-                                if (!showRail && currentRoute != "wrapped") {
+                                if (!showRail && currentRoute != "") {
                                     Box {
-                                        if (currentRoute != "wrapped") {
+                                        if (currentRoute != "") {
                                             BottomSheetPlayer(
                                                 state = playerBottomSheetState,
                                                 navController = navController,
@@ -879,7 +879,7 @@ class MainActivity : ComponentActivity() {
                                     }
                                 } else {
                                     val currentRoute = navBackStackEntry?.destination?.route
-                                    if (currentRoute != "wrapped") {
+                                    if (currentRoute != "") {
                                         BottomSheetPlayer(
                                             state = playerBottomSheetState,
                                             navController = navController,
@@ -902,7 +902,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Row(Modifier.fillMaxSize()) {
                                 val currentRoute = navBackStackEntry?.destination?.route
-                                if (showRail && currentRoute != "wrapped") {
+                                if (showRail && currentRoute != "") {
                                     // Memoize NavigationRail to avoid unnecessary recompositions
                                     val railContainerColor = remember(pureBlack) {
                                         if (pureBlack) Color.Black else null

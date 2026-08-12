@@ -15,12 +15,9 @@ import coil3.request.ImageRequest
 import coil3.request.SuccessResult
 import coil3.toBitmap
 import kotlinx.coroutines.launch
-import com.metrolist.music.widget.HelloWidget
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.appwidget.AppWidgetManager
-import android.widget.RemoteViews
 import android.app.PendingIntent
 import android.os.Build
 import androidx.core.app.NotificationCompat
@@ -393,7 +390,6 @@ class MusicService :
 
         currentSong.debounce(1000).collect(scope) { song ->
             updateNotification()
-            updateWidgetUI(player.isPlaying)
             if (song != null && player.playWhenReady && player.playbackState == Player.STATE_READY) {
                 discordRpc?.updateSong(song, player.currentPosition, player.playbackParameters.speed, dataStore.get(DiscordUseDetailsKey, false))
             } else {
@@ -1267,7 +1263,6 @@ class MusicService :
             val metadata = mediaItem.metadata
             if (metadata != null) {
                 // Try to navigate to the item if it's already in Cast queue
-                // This avoids a full reload which causes the widget to refresh
                 val navigated = castConnectionHandler?.navigateToMediaIfInQueue(metadata.id) ?: false
                 if (!navigated) {
                     // Item not in Cast queue, need to reload
@@ -1361,7 +1356,6 @@ class MusicService :
 
         // Update the Discord RPC activity if the player is playing
         if (events.containsAny(Player.EVENT_IS_PLAYING_CHANGED)) {
-            updateWidgetUI(player.isPlaying)
             if (player.isPlaying) {
                 currentSong.value?.let { song ->
                     scope.launch {
@@ -1809,16 +1803,13 @@ class MusicService :
             }
             HelloWidget.ACTION_NEXT -> {
                 player.seekToNext()
-                updateWidgetUI(player.isPlaying)
-            }
+                }
             HelloWidget.ACTION_PREV -> {
                 player.seekToPrevious()
-                updateWidgetUI(player.isPlaying)
-            }
+                }
             HelloWidget.ACTION_LIKE -> {
                 toggleLike()
-                updateWidgetUI(player.isPlaying)
-            }
+                }
         }
 
         // IMPORTANT: Pass everything else to Media3 so notification buttons still work!
