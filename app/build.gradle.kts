@@ -45,39 +45,17 @@ android {
             buildConfigField("Boolean", "CAST_AVAILABLE", "false")
         }
         
-        // GMS variant - with Google Cast support (requires Google Play Services)
-        create("gms") {
-            dimension = "variant"
-            buildConfigField("Boolean", "CAST_AVAILABLE", "true")
-        }
+        // GMS variant - REMOVED (only keeping foss + arm64)
         
-        create("universal") {
-            dimension = "abi"
-            ndk {
-                abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
-            }
-            buildConfigField("String", "ARCHITECTURE", "\"universal\"")
-        }
+        // ABI kept: arm64 only (others removed per user request)
         create("arm64") {
             dimension = "abi"
             ndk { abiFilters += "arm64-v8a" }
             buildConfigField("String", "ARCHITECTURE", "\"arm64\"")
         }
-        create("armeabi") {
-            dimension = "abi"
-            ndk { abiFilters += "armeabi-v7a" }
-            buildConfigField("String", "ARCHITECTURE", "\"armeabi\"")
-        }
-        create("x86") {
-            dimension = "abi"
-            ndk { abiFilters += "x86" }
-            buildConfigField("String", "ARCHITECTURE", "\"x86\"")
-        }
-        create("x86_64") {
-            dimension = "abi"
-            ndk { abiFilters += "x86_64" }
-            buildConfigField("String", "ARCHITECTURE", "\"x86_64\"")
-        }
+
+
+
     }
 
     signingConfigs {
