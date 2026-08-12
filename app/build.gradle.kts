@@ -221,11 +221,7 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(project(":innertube"))
-    implementation(project(":kugou"))
-    implementation(project(":lrclib"))
-    implementation(project(":kizzy"))
-    implementation(project(":lastfm"))
-    implementation(project(":betterlyrics"))
+    // lyrics/integration modules removed
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.serialization.json)

@@ -19,11 +19,7 @@ dependencyResolutionManagement {
 rootProject.name = "Metrolist"
 include(":app")
 include(":innertube")
-include(":kugou")
-include(":lrclib")
-include(":kizzy")
-include(":lastfm")
-include(":betterlyrics")
+// lyrics/integration modules removed
 
 // Use a local copy of NewPipe Extractor by uncommenting the lines below.
 // We assume, that Metrolist and NewPipe Extractor have the same parent directory.

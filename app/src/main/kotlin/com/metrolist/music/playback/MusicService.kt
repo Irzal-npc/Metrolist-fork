@@ -133,7 +133,6 @@ import com.metrolist.music.extensions.setOffloadEnabled
 import com.metrolist.music.extensions.toMediaItem
 import com.metrolist.music.extensions.toPersistQueue
 import com.metrolist.music.extensions.toQueue
-import com.metrolist.music.lyrics.LyricsHelper
 import com.metrolist.music.models.PersistPlayerState
 import com.metrolist.music.models.PersistQueue
 import com.metrolist.music.models.toMediaMetadata
@@ -190,7 +189,6 @@ class MusicService :
     lateinit var database: MusicDatabase
 
     @Inject
-    lateinit var lyricsHelper: LyricsHelper
 
     @Inject
     lateinit var syncUtils: SyncUtils
@@ -412,7 +410,7 @@ class MusicService :
             if (showLyrics && mediaMetadata != null && database.lyrics(mediaMetadata.id)
                     .first() == null
             ) {
-                val lyrics = lyricsHelper.getLyrics(mediaMetadata)
+                // lyrics removed
                 database.query {
                     upsert(
                         LyricsEntity(
