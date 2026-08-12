@@ -73,7 +73,6 @@ import com.metrolist.music.ui.utils.backToMain
 import com.metrolist.music.utils.rememberEnumPreference
 import com.metrolist.music.utils.rememberPreference
 import com.metrolist.music.utils.setAppLocale
-import java.net.Proxy
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -92,11 +91,6 @@ fun ContentSettings(
     val (contentCountry, onContentCountryChange) = rememberPreference(key = ContentCountryKey, defaultValue = "system")
     val (hideExplicit, onHideExplicitChange) = rememberPreference(key = HideExplicitKey, defaultValue = false)
     val (hideVideoSongs, onHideVideoSongsChange) = rememberPreference(key = HideVideoSongsKey, defaultValue = false)
-    val (proxyEnabled, onProxyEnabledChange) = rememberPreference(key = ProxyEnabledKey, defaultValue = false)
-    val (proxyType, onProxyTypeChange) = rememberEnumPreference(key = ProxyTypeKey, defaultValue = Proxy.Type.HTTP)
-    val (proxyUrl, onProxyUrlChange) = rememberPreference(key = ProxyUrlKey, defaultValue = "host:port")
-    val (proxyUsername, onProxyUsernameChange) = rememberPreference(key = ProxyUsernameKey, defaultValue = "username")
-    val (proxyPassword, onProxyPasswordChange) = rememberPreference(key = ProxyPasswordKey, defaultValue = "password")
     val (enableKugou, onEnableKugouChange) = rememberPreference(key = EnableKugouKey, defaultValue = true)
     val (enableLrclib, onEnableLrclibChange) = rememberPreference(key = EnableLrcLibKey, defaultValue = true)
     val (enableBetterLyrics, onEnableBetterLyricsChange) = rememberPreference(key = EnableBetterLyricsKey, defaultValue = true)
@@ -108,129 +102,6 @@ fun ContentSettings(
     val (lengthTop, onLengthTopChange) = rememberPreference(key = TopSize, defaultValue = "50")
     val (quickPicks, onQuickPicksChange) = rememberEnumPreference(key = QuickPicksKey, defaultValue = QuickPicks.QUICK_PICKS)
     val (showWrappedCard, onShowWrappedCardChange) = rememberPreference(key = ShowWrappedCardKey, defaultValue = false)
-
-    var showProxyConfigurationDialog by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    if (showProxyConfigurationDialog) {
-        var expandedDropdown by remember { mutableStateOf(false) }
-
-        var tempProxyUrl by rememberSaveable { mutableStateOf(proxyUrl) }
-        var tempProxyUsername by rememberSaveable { mutableStateOf(proxyUsername) }
-        var tempProxyPassword by rememberSaveable { mutableStateOf(proxyPassword) }
-        var authEnabled by rememberSaveable { mutableStateOf(proxyUsername.isNotBlank() || proxyPassword.isNotBlank()) }
-
-        AlertDialog(
-            onDismissRequest = { showProxyConfigurationDialog = false },
-            title = {
-                Text(stringResource(R.string.config_proxy))
-            },
-            text = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    ExposedDropdownMenuBox(
-                        expanded = expandedDropdown,
-                        onExpandedChange = { expandedDropdown = !expandedDropdown },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        OutlinedTextField(
-                            value = proxyType.name,
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text(stringResource(R.string.proxy_type)) },
-                            trailingIcon = {
-                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedDropdown)
-                            },
-                            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
-                            modifier = Modifier
-                                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
-                                .fillMaxWidth()
-                        )
-                        ExposedDropdownMenu(
-                            expanded = expandedDropdown,
-                            onDismissRequest = { expandedDropdown = false }
-                        ) {
-                            listOf(Proxy.Type.HTTP, Proxy.Type.SOCKS).forEach { type ->
-                                DropdownMenuItem(
-                                    text = { Text(type.name) },
-                                    onClick = {
-                                        onProxyTypeChange(type)
-                                        expandedDropdown = false
-                                    }
-                                )
-                            }
-                        }
-                    }
-
-                    OutlinedTextField(
-                        value = tempProxyUrl,
-                        onValueChange = { tempProxyUrl = it },
-                        label = { Text(stringResource(R.string.proxy_url)) },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(stringResource(R.string.enable_authentication))
-                        Switch(
-                            checked = authEnabled,
-                            onCheckedChange = {
-                                authEnabled = it
-                                if (!it) {
-                                    tempProxyUsername = ""
-                                    tempProxyPassword = ""
-                                }
-                            }
-                        )
-                    }
-
-                    AnimatedVisibility(visible = authEnabled) {
-                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            OutlinedTextField(
-                                value = tempProxyUsername,
-                                onValueChange = { tempProxyUsername = it },
-                                label = { Text(stringResource(R.string.proxy_username)) },
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                            OutlinedTextField(
-                                value = tempProxyPassword,
-                                onValueChange = { tempProxyPassword = it },
-                                label = { Text(stringResource(R.string.proxy_password)) },
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-                }
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        onProxyUrlChange(tempProxyUrl)
-                        onProxyUsernameChange(if (authEnabled) tempProxyUsername else "")
-                        onProxyPasswordChange(if (authEnabled) tempProxyPassword else "")
-                        showProxyConfigurationDialog = false
-                    }
-                ) {
-                    Text(stringResource(R.string.save))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    showProxyConfigurationDialog = false
-                }) {
-                    Text(stringResource(R.string.cancel))
-                }
-            }
-        )
-    }
 
     var showContentLanguageDialog by rememberSaveable {
         mutableStateOf(false)
@@ -484,39 +355,6 @@ fun ContentSettings(
 
         Spacer(modifier = Modifier.height(27.dp))
 
-        Material3SettingsGroup(
-            title = stringResource(R.string.proxy),
-            items = buildList {
-                add(
-                    Material3SettingsItem(
-                        icon = painterResource(R.drawable.wifi_proxy),
-                        title = { Text(stringResource(R.string.enable_proxy)) },
-                        trailingContent = {
-                            Switch(
-                                checked = proxyEnabled,
-                                onCheckedChange = onProxyEnabledChange,
-                                thumbContent = {
-                                    Icon(
-                                        painter = painterResource(
-                                            id = if (proxyEnabled) R.drawable.check else R.drawable.close
-                                        ),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(SwitchDefaults.IconSize)
-                                    )
-                                }
-                            )
-                        },
-                        onClick = { onProxyEnabledChange(!proxyEnabled) }
-                    )
-                )
-                if (proxyEnabled) {
-                    add(
-                        Material3SettingsItem(
-                            icon = painterResource(R.drawable.settings),
-                            title = { Text(stringResource(R.string.config_proxy)) },
-                            onClick = { showProxyConfigurationDialog = true }
-                        )
-                    )
                 }
             }
         )
